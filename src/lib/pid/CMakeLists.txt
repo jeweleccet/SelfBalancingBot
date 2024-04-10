@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.27)
+project(pid_controller)
+add_library(pid_lib)
+target_sources(pid_lib PRIVATE src/pid.cpp)
+add_executable(pid src/pid.cpp)
