@@ -1,5 +1,10 @@
-cmake_minimum_required(VERSION 3.27)
-project(pid_controller)
-add_library(pid_lib)
-target_sources(pid_lib PRIVATE src/pid.cpp)
-add_executable(pid src/pid.cpp)
+# Define library target
+add_library(pid STATIC
+        src/pid.cpp
+)
+
+# Include directories
+target_include_directories(pid
+        PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/include  # Include directory for public headers
+)

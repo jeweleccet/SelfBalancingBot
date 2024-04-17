@@ -1,19 +1,9 @@
-cmake_minimum_required(VERSION 3.27)
-project(SelfBalancingBot
-        VERSION 0.1
-        DESCRIPTION "A self Balancing bot"
-        LANGUAGES C CXX ASM)
+cmake_minimum_required(VERSION 3.10)
+project(SelfBalancingBot)
 
-set_property(GLOBAL PROPERTY C_STANDARD 11)
-set_property(GLOBAL PROPERTY CXX_STANDARD 17)
+# Include subdirectories
+add_subdirectory(src)
 
-#################
-# Build Modules #
-#################
-
-#if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR PROJECTVARNAME_BUILD_TESTING)
-#    include(CTest)
-#endif()
 
 ## Define and Process Project Options
 #include(BuildOptions.cmake)

@@ -3,7 +3,7 @@
 //Licensed under the CC BY-NC SA 4.0
 
 //Include the header file for this class
-#include "../include/MPU6050.h"
+#include "../include/mpu6050.h"
 
 using namespace robot::imu;
 MPU6050::MPU6050(int8_t addr, bool run_update_thread) {
