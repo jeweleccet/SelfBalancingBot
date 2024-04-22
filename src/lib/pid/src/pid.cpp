@@ -1,4 +1,4 @@
-#include "../include/pid.h"
+#include "pid.h"
 using namespace robot::pid;
 
 Pid::Pid(double input, double output, double setPoint,
