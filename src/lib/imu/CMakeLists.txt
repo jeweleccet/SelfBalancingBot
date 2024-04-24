@@ -3,6 +3,7 @@ add_library(imu STATIC
         src/mpu6050.cpp
 )
 
+target_link_libraries(imu i2c)
 # Include directories
 target_include_directories(imu
         PUBLIC
