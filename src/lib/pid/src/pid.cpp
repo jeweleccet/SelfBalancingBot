@@ -2,15 +2,15 @@
 using namespace robot::pid;
 
 Pid::Pid(double input, double output, double setPoint,
-         double kp, double ki, double kd, int pOn, int controllerDirection)
+         double kp, double ki, double kd, controllerDirection controllerDirection)
         :input_(input), output_(output), setPoint_(setPoint),
-        kp_(kp), ki_(ki), kd_(kd), pOn_(pOn), controllerDirection_(controllerDirection)
+        kp_(kp), ki_(ki), kd_(kd), controllerDirection_(controllerDirection)
 {
     inAuto_ = false;
     sampleTime_ = 100.0;
     Pid::setOutput(0, 255);
 
-    Pid::setControllerDirection(controllerDirection_);
+    Pid::setControllerDirection( controllerDirection_);
     Pid::setTunings(kp_, ki_, kd_);
     auto now = chrono::system_clock::now();
     auto duration = now.time_since_epoch();
@@ -89,26 +89,20 @@ bool Pid::compute()
  * be adjusted on the fly during normal operation
  ******************************************************************************/
 
-void Pid::setTunings(double kp, double ki , double kd, int pOn)
+void Pid::setTunings(double kp, double ki , double kd)
 {
     if(kp < 0 || ki < 0 || kd < 0) return;
-    pOn_ = pOn;
-    pOnE_ = pOn == 1;
+
     auto sample_time_insec = sampleTime_/1000;
     kp_ =kp;
     ki_ = ki * sample_time_insec;
     kd_ = kd / sample_time_insec;
-    if(controllerDirection_ == pidCategory_::Reverse)
+    if(controllerDirection_ == controllerDirection::Reverse)
     {
         kp_ = (0 - kp);
         ki_ = (0 - ki);
         kd_ = (0 - kd);
     }
-}
-
-void Pid::setTunings(double kp, double ki , double kd)
-{
-    setTunings(kp, ki, kd, pOn_);
 }
 
 /* SetSampleTime(...) *********************************************************
@@ -153,9 +147,9 @@ void Pid::setOutput(double min, double max)
  * when the transition from manual to auto occurs, the controller is
  * automatically initialized
  ******************************************************************************/
-void Pid::setMode(int Mode)
+void Pid::setMode(pidMode Mode)
 {
-    bool newAuto = (Mode == pidCategory_::Automatic);
+    bool newAuto = (Mode == pidMode::Automatic);
     if(newAuto && !inAuto_)
     {  /*we just went from manual to auto*/
         Pid::initialize();
@@ -187,7 +181,7 @@ void Pid::initialize()
  * know which one, because otherwise we may increase the output when we should
  * be decreasing.  This is called from the constructor.
  ******************************************************************************/
-void Pid::setControllerDirection(int direction)
+void Pid::setControllerDirection(controllerDirection direction)
 {
     if(inAuto_ && direction !=controllerDirection_)
     {

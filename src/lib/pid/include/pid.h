@@ -6,20 +6,31 @@
 using namespace std;
 namespace robot::pid
 {
+    enum pidMode
+    {
+        Automatic = 0,
+        Manual,
+    };
+
+    enum controllerDirection
+    {
+        Direct = 1,
+        Reverse = -1
+    };
+
     class Pid
     {
     public:
         Pid(double input, double output, double setPoint,
-            double kp, double ki, double kd, int pOn, int controllerDirection);
+            double kp, double ki, double kd, controllerDirection controllerDirection);
 
-        void setMode(int mode);
+        void setMode(pidMode mode);
         bool compute();
         void setOutput(double min, double max);
 
-        void setTunings(double kp, double ki , double kd, int pOn);
         void setTunings(double kp, double ki , double kd);
 
-        void setControllerDirection(int );
+        void setControllerDirection(controllerDirection direction );
         void setSampleTime(long long new_sample_time);
 
         /* Display Functions */
@@ -32,15 +43,7 @@ namespace robot::pid
     private:
 
         void initialize();
-        enum pidCategory_
-        {
-            Automatic,
-            Manual,
-            Direct,
-            Reverse,
-            POnM,
-            PonE
-        };
+
 
         double kp_;
         double ki_;
@@ -50,7 +53,7 @@ namespace robot::pid
         double output_;
         double setPoint_;
 
-        int controllerDirection_;
+        controllerDirection controllerDirection_;
         int pOn_;
 
         long long lastTime_;
