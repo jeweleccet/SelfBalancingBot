@@ -14,7 +14,7 @@ MPU6050::MPU6050(int8_t addr, bool run_update_thread) {
     _first_run = 1; //Variable for whether to set gyro angle to acceleration angle in compFilter
     calc_yaw = false;
 
-    f_dev = open("/dev/i2c-1", O_RDWR); //Open the I2C device file
+    f_dev = open("/dev/i2c-0", O_RDWR); //Open the I2C device file
     if (f_dev < 0) { //Catch errors
         std::cout << "ERR (MPU6050.cpp:MPU6050()): Failed to open /dev/i2c-1. Please check that I2C is enabled with raspi-config\n"; //Print error message
     }
